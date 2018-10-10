@@ -6,7 +6,7 @@ for given parameters
 from Data import Data
 from Function import Function
 
-class ChiSquare(object):
+class ChiSquare(Function):
 
     def __init__(self, func, dataFileName):
         self.func = func
