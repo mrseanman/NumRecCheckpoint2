@@ -23,6 +23,12 @@ class Data(object):
 
         for line in lines:
             vals = line.split()
+            numOfVals = len(vals)
+
             self.data[0].append(float(vals[0]))
-            self.data[1].append(float(vals[1]))
-            self.errData.append(float(vals[2]))
+            if numOfVals > 1:
+                self.data[1].append(float(vals[1]))
+                if numOfVals > 2:
+                    self.errData.append(float(vals[2]))
+
+        dataText.close()

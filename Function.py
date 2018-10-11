@@ -3,6 +3,7 @@ Returns the value of a function for a given set
 of independent variables
 '''
 import numpy as np
+
 class Function(object):
 
     #m = params[0]
@@ -12,6 +13,12 @@ class Function(object):
 
     def minusOne(self, x):
         return x - 1.
+
+    #tau = params[0]
+    def expPDF(self, x , params):
+        tau = params[0]
+        return 1./tau * np.exp(-x / tau)
+
 
 '''
 Creates an instance of a class that is useful for evaluating a compsition
