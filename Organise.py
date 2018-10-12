@@ -15,27 +15,31 @@ class Organise(object):
 
         #m = params[0]
         #c = params[1]
-        paramsGuess = [-1., 1.]
-        paramsAccuracy = [0.001, 0.001]
+        paramsGuess = [0., 1.]
+        paramsAccuracy = [0.00001, 0.00001]
         paramsJump = [1., 1.]
         #evals minimum m and c for our ChiSquare
         params = optimiser.min(chiLinear.evalChiSquare, paramsGuess, paramsJump, paramsAccuracy, [])
 
-        chiMinusOne = ComposeFunction(function.minusOne, chiLinear.evalChiSquare)
 
-        rootPramsGuess = [1., 4.]
-        rootParamsJump = [0.1, 0.1]
+
+
+        rootPramsGuess = [0., 0.]
+        rootParamsJump = [0.01, 0.01]
         rootParamsAccuracy = [0.0001, 0.0001]
+
+        print("test root" + str(optimiser.root(function.polyNomial, [-1.3], [0.01], [0.00001], [])))
+
         mErr = optimiser.root(chiMinusOne.evalCompose, rootPramsGuess, rootParamsJump, rootParamsAccuracy, [1])[0] - params[0]
-        rootPramsGuess = [1, 4.]
         cErr = optimiser.root(chiMinusOne.evalCompose, rootPramsGuess, rootParamsJump, rootParamsAccuracy, [0])[1] - params[1]
-
+        
         print("[m,c] = " + str(params))
-        print("m err = " + str(mErr))
-        print("c err = " + str(cErr))
 
-        mWidth = 0.005
-        cWidth = 0.05
+
+
+
+        mWidth = 0.002
+        cWidth = 0.01
         paramPlotWidths = [mWidth, cWidth]
 
         self.plotChiAroundMin(chiLinear.evalChiSquare, params, paramPlotWidths)
@@ -66,6 +70,10 @@ class Organise(object):
             mVals.append(chiEval([m, minC]) - minChi)
         for c in cRange:
             cVals.append(chiEval([minM, c]) - minChi)
+
+        #centers mRange and cRange around minimum
+        mRange -= minM
+        cRange -= minC
 
         pl.plot(mRange, mVals)
         pl.show()

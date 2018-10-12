@@ -3,20 +3,25 @@ Class to minimiseChior find roots of given function
 '''
 import copy
 import math
+import numpy as np
 from Function import Function, ComposeFunction
 
 class Optimise(object):
-    def min(self, func, paramsGuess, paramsJump, paramsAccuracy, paramsToFix):
-        numParams = len(paramsGuess)
-        params = paramsGuess
-        for paramIndex in range(numParams):
-            if not(paramIndex in paramsToFix):
-                params = self.minSingleParam(func, paramIndex, params, paramsJump[paramIndex], paramsAccuracy[paramIndex])
 
+    def min(self, func, fParamsGuess, paramsJump, paramsAccuracy, paramsToFix):
+        params = copy.deepcopy(fParamsGuess)
+
+        numParams = len(params)
+
+        for i in range(numParams):
+            for paramIndex in range(numParams - i):
+                if not(paramIndex in paramsToFix):
+                    params = self.minSingleParam(func, paramIndex, params, paramsJump[paramIndex], paramsAccuracy[paramIndex])
         return params
 
-    def minSingleParam(self, func, freeParamIndex, paramsF, freeParamJump, accuracy):
-        params = copy.deepcopy(paramsF)
+
+    def minSingleParam(self, func, freeParamIndex, fParams, freeParamJump, accuracy):
+        params = copy.deepcopy(fParams)
 
         numIter = int(math.ceil(-math.log(accuracy/freeParamJump, 2.)))
         if numIter < 1:
@@ -32,7 +37,6 @@ class Optimise(object):
             direction = -1.
 
         val1 = val0
-
         for i in range(numIter):
             changeDir = False
             while not(changeDir):
@@ -46,9 +50,42 @@ class Optimise(object):
 
         return params
 
-    #find the minimum of abs(func) so not really a root
-    #but it tries its best
-    def root(self, func, paramsGuess, paramsJump, paramsAccuracy, paramsToFix):
-        composeFuncAbs = ComposeFunction(abs, func)
-        params = self.min(composeFuncAbs.evalCompose, paramsGuess, paramsJump, paramsAccuracy, paramsToFix)
+
+    def root(self, func, fParamsGuess, paramsJump, paramsAccuracy, paramsToFix):
+        params = copy.deepcopy(fParamsGuess)
+
+        numParams = len(params)
+
+        for paramIndex in range(numParams):
+            params = self.rootSingleParam(func, paramIndex, params, paramsJump[paramIndex], paramsAccuracy[paramIndex])
+        return params
+
+
+    def rootSingleParam(self, func, freeParamIndex, fParams, freeParamJump, accuracy):
+        params = copy.deepcopy(fParams)
+
+        numIter = int(math.ceil(-math.log(accuracy/freeParamJump, 2.)))
+        if numIter < 1:
+            numIter = 1
+
+        val0 = func(params)
+        params[freeParamIndex] += freeParamJump
+        val1 = func(params)
+
+        if ((val1 - val0) * np.sign(val0)) == -1 :
+            direction = 1.
+        else:
+            direction = -1.
+        val1 = val0
+            
+        for i in range(numIter):
+            val0 = val1
+            while np.sign(val0) == np.sign(val1):
+                val0 = val1
+                params[freeParamIndex] += direction*freeParamJump
+                val1 = func(params)
+
+            freeParamJump /= 2.
+            direction *= -1
+
         return params
