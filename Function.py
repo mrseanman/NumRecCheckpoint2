@@ -12,14 +12,14 @@ class Function(object):
         return params[0]*x + params[1]
 
     #tau = params[0]
-    def expPDF(self, x , params):
+    def expPDF(self, x, params):
         tau = params[0]
         return 1./tau * np.exp(-x / tau)
 
     #x = params[0]
     def polyNomial(self, params):
         x = params[0]
-        return x**2. - 2.
+        return x**2. + 1.
 
 
 '''
