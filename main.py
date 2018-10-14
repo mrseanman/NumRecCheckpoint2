@@ -1,6 +1,7 @@
 from Organise import Organise
 
 def main():
+    #does all this
     do = Organise()
     print("#########################################\nFinding linear fit params using CHISQUARE\n#########################################")
     do.findChiParams()
