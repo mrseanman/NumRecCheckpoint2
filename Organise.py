@@ -90,6 +90,7 @@ class Organise(object):
         pl.ylabel("$\Delta \chi ^{2}$")
         pl.axvline(x = mErrPos, linestyle=':', color='r')
         pl.axvline(x = -mErrNeg, linestyle=':', color='r')
+        pl.axhline(y = 1., linewidth=0.5, linestyle='--', color='dimgray')
         pl.plot(mRange, mVals)
         pl.show()
 
@@ -98,6 +99,7 @@ class Organise(object):
         pl.ylabel("$\Delta \chi ^{2}$")
         pl.axvline(x = cErrPos, linestyle=':', color='r')
         pl.axvline(x = -cErrNeg, linestyle=':', color='r')
+        pl.axhline(y = 1., linewidth=0.5, linestyle='--', color='dimgray')
         pl.plot(cRange, cVals)
         pl.show()
 
@@ -158,5 +160,6 @@ class Organise(object):
         pl.ylabel("$\Delta NLL$")
         pl.axvline(x = tauErrPos, linestyle=':', color='r')
         pl.axvline(x = -tauErrNeg, linestyle=':', color='r')
+        pl.axhline(y = 0.5, linewidth=0.5, linestyle='--', color='dimgray')
         pl.plot(tauRange, NLLVals)
         pl.show()
