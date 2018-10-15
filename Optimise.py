@@ -13,23 +13,23 @@ class Optimise(object):
         numParams = len(params)
 
         totalRepeats = 3
-
         for i in range(totalRepeats):
+            #goes through all the parameters
+            #minimises function by minimising each param
+            #one at a time while fixing all others
             for paramIndex in range(numParams ):
                 if not(paramIndex in paramsToFix):
                     params = self.minSingleParam(func, paramIndex, params, paramsJump[paramIndex], paramsAccuracy[paramIndex])
-        '''
-        paramIndex = 1
-        params = self.minSingleParam(func, paramIndex, params, paramsJump[paramIndex], paramsAccuracy[paramIndex])
-        '''
         return params
-
 
     def minSingleParam(self, func, freeParamIndex, fParams, freeParamJump, accuracy):
         params = copy.deepcopy(fParams)
+
         numIter = int(math.ceil(-math.log(accuracy/freeParamJump, 2.)))
         if numIter < 1:
             numIter = 1
+
+        #finds initial direction
         val0 = func(params)
         params[freeParamIndex] += freeParamJump
         val1 = func(params)
@@ -37,6 +37,7 @@ class Optimise(object):
             direction = 1.
         else:
             direction = -1.
+
         val1 = val0
         for i in range(numIter):
             changeDir = False
@@ -46,6 +47,7 @@ class Optimise(object):
                 val1 = func(params)
                 if val1 > val0:
                     changeDir = True
+            #halves the jump at each direction change
             freeParamJump /= 2.
             direction *= -1.
         return params
@@ -67,6 +69,7 @@ class Optimise(object):
         if numIter < 1:
             numIter = 1
 
+        #finds initial direction
         val0 = func(params)
         params[freeParamIndex] += freeParamJump
         val1 = func(params)
