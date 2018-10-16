@@ -43,11 +43,11 @@ class Organise(object):
         cErrMean = (cErrPos + cErrNeg)/2.
 
         print("")
-        print("[m,c]:\t" + str(params) + "\n")
-        print("mErr:\t+" + str(mErrPos) + "\t-" + str(mErrNeg))
-        print("mean:\t" + str(mErrMean) + "\n")
-        print("cErr:\t+" + str(cErrPos) + "\t-" + str(cErrNeg))
-        print("Mean:\t" + str(cErrMean))
+        print("[m,c]:\t" + str(np.around(np.array(params),6)) + "\n")
+        print("mErr:\t+" + str(np.round(mErrPos, 6)) + "\t-" + str(np.round(mErrNeg, 6)))
+        print("mean:\t" + str(np.round(mErrMean, 6)) + "\n")
+        print("cErr:\t+" + str(np.round(cErrPos, 6)) + "\t-" + str(np.round(cErrNeg, 6)))
+        print("Mean:\t" + str(np.round(cErrMean, 6)))
         print("")
 
         #self.plotChiAroundMin(chiLinear.evalChiSquare, params, [mErrPos, cErrPos], [mErrNeg, cErrNeg])
@@ -78,9 +78,9 @@ class Organise(object):
         tauErrMean = (tauErrPos + tauErrNeg)/2.
 
         print("")
-        print("tau:\t" + str(tauMin) + "\n")
-        print("tauErr:\t+" + str(tauErrPos) + "\t-" + str(tauErrNeg))
-        print("mean:\t" + str(tauErrMean))
+        print("tau:\t" + str(np.round(tauMin, 6)) + "\n")
+        print("tauErr:\t+" + str(np.round(tauErrPos, 6)) + "\t-" + str(np.round(tauErrNeg, 6)))
+        print("mean:\t" + str(np.round(tauErrMean, 6)))
         print("")
 
         #self.plotNLLAroundMin(NLLExp.evalNLL, params, [tauErrPos], [tauErrNeg])
