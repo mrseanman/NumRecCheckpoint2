@@ -1,6 +1,8 @@
 '''
 Class to minimiseChior find roots of given function
 '''
+
+#test for git
 import copy
 import math
 import numpy as np
