@@ -12,7 +12,7 @@ class Optimise(object):
         params = copy.deepcopy(fParamsGuess)
         numParams = len(params)
 
-        totalRepeats = 100
+        totalRepeats = 10
         for i in range(totalRepeats):
             #goes through all the parameters
             #minimises function by minimising each param
